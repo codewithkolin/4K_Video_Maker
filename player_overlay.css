@@ -1,0 +1,133 @@
+/* Music Player Overlay Styles - Exact Match to Reference Design */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background: transparent !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(25, 25, 25, 0.5);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.text-section {
+    flex: 1;
+}
+
+.song-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.artist-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #CCCCCC;
+    opacity: 0.9;
+    letter-spacing: -0.3px;
+}
+
+.nav-icon {
+    font-size: 14px;
+    color: #CCCCCC;
+    padding: 4px;
+    cursor: default;
+    opacity: 0.8;
+    padding-left: 2px; /* Slight offset for triangle */
+}
+
+.progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.time-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 13px;
+    color: #CCCCCC;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+
+.current-time {
+    opacity: 0.9;
+}
+
+.total-time {
+    opacity: 0.9;
+}
+
+.progress-container {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.progress-bar-unfilled {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(60, 60, 60, 0.8);
+    border-radius: 3px;
+}
+
+.progress-bar-filled {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #FF69B4;
+    border-radius: 3px;
+    transition: width 0.03s linear; /* Smooth animation for 30fps */
+    box-shadow: 0 0 4px rgba(255, 105, 180, 0.6);
+    z-index: 1;
+}
+
+.progress-scrubber {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 14px;
+    background: #FFFFFF;
+    border-radius: 1px;
+    z-index: 2;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+    transition: left 0.03s linear; /* Smooth movement for 30fps */
+}

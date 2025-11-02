@@ -1,11 +1,14 @@
 # 4K Video Creator for YouTube
 
-A professional GUI application for creating high-quality 4K (3840x2160) videos from a single image and 20 WAV music files, optimized for YouTube upload.
+A professional GUI application for creating high-quality 4K (3840x2160) videos from a single image and multiple audio files, optimized for YouTube upload. Video length is dynamically determined by the total duration of all selected audio files.
 
 ## Features
 
 - **4K Resolution**: Creates videos at 3840x2160 pixels (true 4K)
 - **High Quality**: Uses industry-standard FFmpeg with YouTube-optimized settings
+- **Flexible Audio Selection**: Choose files manually or use random selection from a directory
+- **Multiple Audio Formats**: Supports WAV, MP3, M4A, FLAC, AAC, and OGG
+- **Random Audio Selection**: Automatically selects files to meet your target duration with no duplicates
 - **Smooth Audio Transitions**: Automatic fade-in/fade-out between music files
 - **User-Friendly GUI**: Simple interface for selecting files and creating videos
 - **YouTube Ready**: Output format optimized for YouTube uploads
@@ -23,6 +26,7 @@ All Python dependencies are listed in `requirements.txt`:
 - Pillow >= 10.0.0
 - pydub >= 0.25.1
 - ffmpeg-python >= 0.2.0
+- audioop-lts >= 0.2.0 (required for Python 3.13+ compatibility)
 
 ## Installation
 
@@ -49,7 +53,29 @@ sudo apt-get update
 sudo apt-get install ffmpeg
 ```
 
-### 2. Install Python Dependencies
+### 2. Create Virtual Environment (Recommended)
+
+It's recommended to use a virtual environment to keep dependencies isolated:
+
+```bash
+python3 -m venv venv
+```
+
+### 3. Activate Virtual Environment
+
+**macOS/Linux:**
+```bash
+source venv/bin/activate
+```
+
+**Windows:**
+```bash
+venv\Scripts\activate
+```
+
+### 4. Install Python Dependencies
+
+Once the virtual environment is activated, install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -64,6 +90,19 @@ pip install Pillow pydub ffmpeg-python
 
 ### Running the Application
 
+**First, activate the virtual environment (if using one):**
+
+**macOS/Linux:**
+```bash
+source venv/bin/activate
+```
+
+**Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**Then run the application:**
 ```bash
 python main.py
 ```
@@ -74,10 +113,26 @@ python main.py
    - Supported formats: JPG, PNG, BMP, TIFF
    - The image will be automatically resized to 4K resolution
 
-2. **Select 20 WAV Files**: Click "Select 20 WAV Files" and choose exactly 20 WAV audio files
-   - Only WAV files are supported
+2. **Select Audio Files**: Choose one of the following methods:
+   
+   **Method A: Manual Selection**
+   - Click "Select WAV Files" and choose one or more WAV audio files
+   - Only WAV files are supported for manual selection
+   - You can select any number of audio files (1 or more)
    - Files will be concatenated in the order selected
-   - Fade transitions (2 seconds) will be added between files
+   
+   **Method B: Random Selection**
+   - Click "Select Directory" to choose a folder containing audio files
+   - Enter your desired target duration in minutes (default: 60)
+   - Click "Generate Random Selection" to randomly select files to meet your target
+   - Supports multiple audio formats: WAV, MP3, M4A, FLAC, AAC, OGG
+   - Searches directory and all subdirectories automatically
+   - No duplicate files will be selected
+   - Result will be close to your target duration with 30% tolerance
+   
+   **Audio Processing**:
+   - Video length automatically matches the total duration of all audio files
+   - Fade transitions (2 seconds) are added between files
 
 3. **Select Output Location**: Click "Select Location" and choose where to save the video
    - Recommended: Save as `.mp4` format
@@ -106,10 +161,12 @@ These settings ensure the highest possible quality suitable for YouTube's 4K for
 
 1. **Image Processing**: The selected image is resized to 4K resolution using high-quality LANCZOS resampling algorithm, maintaining aspect ratio with black padding if needed.
 
-2. **Audio Processing**: All 20 WAV files are loaded and processed:
+2. **Audio Processing**: All selected audio files are loaded and processed:
+   - Supports multiple formats (WAV, MP3, M4A, FLAC, AAC, OGG)
    - Fade-in (2 seconds) applied to each file
    - Fade-out (2 seconds) applied to each file
    - Files are concatenated sequentially
+   - Total duration determines video length
 
 3. **Video Creation**: FFmpeg creates a video:
    - Static 4K image displayed for the full audio duration
@@ -127,9 +184,10 @@ If you see "FFmpeg Not Found":
 
 ### Audio Processing Errors
 
-- Ensure all files are valid WAV files
-- Check that exactly 20 files are selected
+- Ensure all files are valid audio files (WAV, MP3, M4A, FLAC, AAC, or OGG)
+- Check that at least one audio file is selected
 - Verify files are not corrupted
+- For random selection, ensure your directory contains enough audio files to meet the target duration
 
 ### Image Processing Issues
 
@@ -162,7 +220,9 @@ This project is provided as-is for creating high-quality 4K videos.
 
 - Temporary files are automatically cleaned up after video creation
 - The image will be displayed for the entire duration of the concatenated audio
-- All audio files must be in WAV format
+- Audio files can be in various formats (WAV, MP3, M4A, FLAC, AAC, OGG)
+- Random selection automatically avoids duplicate files and searches all subdirectories
 - For best YouTube results, use high-bitrate source audio files
+- Random selection uses a 30% tolerance for target duration to ensure flexibility
 
 # 4K_Video_Maker
